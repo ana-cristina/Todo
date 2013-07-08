@@ -1,7 +1,7 @@
 <h1>TODO LIST</h1>
 
 <div style="align:center, position: absolute">
-    <%= form_for @task, url: (action: "create") do |f| %>
+    <%= simple_form_for @task, :url => {:action => "new"} do |f| %>
 
 		<%= f.input :done , :as => :hidden,  :input_html => {:value => false }%>
    
@@ -9,19 +9,21 @@
 		<%= f.button :submit,  "Add Task" %>
    	<% end %>
 	
-	<% unless tasks.empty? %>
+	<% unless Tasks.find(:all).empty? %>
 	<ul>
-		<% tasks.each |task| %>
+		<% tasks.each do |task| %>
 			<% unless task.done %>
 				
-				<% form_for @task, url: (action: "list") do |f| %> 
+				<% simple_form_for @task,:url => {:action => "list"}do |f| %> 
 					<li>
 						<%= f.input :done, :input_html => { :class => 'box' }, :label => false %>
 						<%= f.button :submit, :display => "none" %>
 						
 					</li>
-	
+				<% end %>
+			<% end %>
+		<% end %>
 	</ul>
-	
+	<% end %>
 </div>
 

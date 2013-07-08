@@ -1,23 +1,22 @@
 class TodosController < ApplicationController
 
   def index
-    @todo   = Task.where(:done => false)
-    @task   = Task.new
-    @lists  = List.all
-    @list   = List.new
+    @todo   = Tasks.where(:done => false)
+    @task   = Tasks.new
     
     respond_to do |format|
       format.html
     end
   end
-  def create
+  def new
 	@task = Task.new(params[:name], params[:done])
 	if @task.save
 		flash[:notice] = "Task succesfully created"
 	else
 		flash[:alert] = "Error creating task"
 	end
-	% TODO refresh
+	redirect_to 'index'
   end
-  
+  def list
+  end
 end
